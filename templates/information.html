@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="Description" content="DSCI551 Website"/>
+        <meta name="Owners" content="Shenghan Liu"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>DSCI 551 Website</title>
+        <header id="explanation">
+            <h1 id="intro">
+                Welcome to Restaurant Recommender System!
+            </h1>
+            <p>
+                Page For Display the Input File Information 
+            </p>
+        </header>
+    </head>
+
+    <body>
+        <h1>Display the Restaurant Infomation in the selected city</h1>
+        <section>
+            <form action = '/result' method="POST" >
+                <p><input type="submit" name = 'submit' value="Go To Recommendation Page" id="result"></p> 
+            </form>
+        </section>
+        
+        <section>
+            <table>
+                <thead>
+                <tr>
+                    <th>file name</th>
+                    <th>file size(MB)</th>
+                    <th>number of attributes</th>
+                    <th>name of attributes</th>
+                    <th>number of records</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>{{ r[1] }}</td>
+                    <td>{{ r[2] }}</td>
+                    <td>{{ r[3] }}</td>
+                    <td>{{ r[4] }}</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>{{ b[1] }}</td>
+                    <td>{{ b[2] }}</td>
+                    <td>{{ b[3] }}</td>
+                    <td>{{ b[4] }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <br>
+            {% block content %}
+            <h1>Restaurant DataFrame</h1>
+            {{b_df.head(5).to_html(classes="table table-striped") | safe}}
+            {% endblock %}
+
+            <br>
+
+            <h1>Review DataFrame</h1>
+            {{r_df.head(5).to_html(classes="table table-striped") | safe}}
+        </section>
+
+    </body>
+    
+</html>
+

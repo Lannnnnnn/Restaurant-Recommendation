@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="Description" content="DSCI551 Website"/>
+        <meta name="Owners" content="Shenghan Liu"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>DSCI 551 Website</title>
+        <header id="explanation">
+            <h1 id="intro">
+                Welcome to Restaurant Recommender System!
+            </h1>
+            <p>
+                Page For Display the Input File Information 
+            </p>
+        </header>
+    </head>
+
+    <body>
+        <main>
+            <section id="centerpiece">
+                Final Recommendation Page
+            </section>
+            <section id="query">
+                <form action = '/update' id="query1" method="POST" onkeydown="return event.key != 'Enter';">
+                    <input type="text" id="querybox" name="querybox" placeholder="What are you looking for?">
+                    <input type="text" id="rank" name="rank" placeholder="how many results(max 10)">
+                    <p><input type="submit" name = 'submit' value="Get Recommendation Results"></p> 
+                </form>
+            </section>
+            <section id='results'>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+                <script>
+                    $(document).ready(function(){
+                        /* On click, run the below code */
+                        $("#submit").click(function(){
+                            /* Get query, location, and button */
+                            var inputnum = document.getElementById('rank').value;
+                            var querytext = document.getElementById('querybox').value;
+
+                            /* this is for displaying the link to the restaurant */
+                            let business_pre = 'http://yelp.com/biz/';
+                            let business_post = '/?show_platform_modal=True';
+
+                            /* Send this information to python file */
+                            req = $.ajax({
+                                url: "/update",
+                                type: "POST",
+                                data: { querybox : querytext, rank : inputnum}
+                            });
+
+                            /* If the python file successfully processed the above information, do the code below */
+                            req.done(function(data) {
+                                /* Remove pre-existing results */
+                                document.querySelectorAll('.result_div').forEach(e => e.remove());
+                                document.querySelectorAll('.result_sep').forEach(e => e.remove());
+
+                                /* Access the data passed in from the python file */
+                                console.log()
+                                vars = data['data'];
+                                
+                                /* For each restaurant, create a new div */
+                                for (var i in vars) {
+                                    info = vars[i];
+                                    /* For each div, add in paragraphs, each with info */
+                                    var newElement = document.createElement('div');
+                                    var restName = document.createElement('h1');
+                                    var restCats = document.createElement('p');
+                                    var restStars = document.createElement('p');
+                                    var address = document.createElement('p');
+                                    var numMentions = document.createElement('p');
+                                    var restWebsite = document.createElement('p');
+                                    /* Fill paragraph elements with info */
+
+                                    restName.innerHTML = info[0];
+                                    address.innerHTML = "Restaurant Address: ".concat(info[1]);
+                                    restStars.innerHTML = "Stars: ".concat(info[2].toFixed(2));
+                                    numMentions.innerHTML = "Number of Reviews: ".concat(info[3]);
+                                    restCats.innerHTML = "Categories: ".concat(info[4]);
+                                    restWebsite.innerHTML = "Website: ".concat(business_pre.concat(info[5]).concat(business_post));
+                                        
+                                    /* Set up breaks and class ids and names */
+                                    var elementSep = document.createElement('br');
+                                    newElement.id = 'result_element';
+                                    newElement.className = 'result_div';
+                                    elementSep.className = 'result_sep';
+                                    /* Append div to body, append info to div */
+
+                                    document.body.appendChild(newElement);
+                                    newElement.appendChild(restName);
+                                    newElement.appendChild(address);
+                                    newElement.appendChild(restStars);
+                                    newElement.appendChild(numMentions);
+                                    newElement.appendChild(restCats);
+                                    newElement.appendChild(restWebsite);
+                                    fade_in(newElement);
+                                    document.body.appendChild(elementSep);
+                                }
+                                scrolldown();
+                            }
+                            );
+                        })
+                    })
+                </script>
+                <script src="{{ url_for('static', filename='results.js') }}" ></script>
+            </section>
+        </main>
+    </body>
+    
+</html>
+

@@ -1,0 +1,133 @@
+html {
+    scroll-behavior: smooth;
+}
+
+#user {
+    float: right;
+    margin: 30px;
+    font-size: 15px;
+    color: white;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: url('food2.jpg'); /* Image credit to Steyn Viljoen, taken from pexels.com*/
+    background-repeat: no-repeat;
+    background-size: 100% 750px;
+    background-attachment: fixed;
+    background-position: center;
+    margin: 0;
+}
+
+#querybox, #userid {
+    border-radius: 10px;
+    border: 2px solid whitesmoke;
+    padding: 10px;
+    font-size: 20px;
+    height:15px;
+    width:200px;
+    outline: none;
+}
+
+#centerpiece {
+    font-size: 50px;
+    text-align: center;
+    margin-top: 150px;
+    color: white;
+}
+
+main > section {
+    margin-top: 50px;
+    text-align: center;
+}
+
+#querybox {
+    height: 20px;
+    width: 35%;
+    outline: none;
+}
+
+button, #foodButton, #restaurantButton {
+    color: white;
+    border: none;
+    background-color: #d32323;
+    border-color: #d32323;
+    display: inline-block;
+    margin: 0;
+    border-radius: 10px;
+    padding: 20px;
+    padding-top: 17px;
+    padding-bottom: 14px;
+    outline: none;
+}
+
+button:hover, #foodButton:hover, #restaurantButton:hover {
+    filter: brightness(110%);
+}
+
+button:active {
+    filter: brightness(90%);
+}
+
+#location {
+    color: gray;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 2px solid whitesmoke;
+    font-size: 15px;
+    height:30px;
+    width:17%;
+    margin-bottom: 250px;
+    margin-left: 0px;
+    outline: none;
+}
+
+#veganButton {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 50%;
+}
+
+select option {
+    color: black;
+}
+
+select option:first-child {
+    color: gray;
+}
+
+#explanation {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: white;
+    padding: 20px;
+    border-radius: 25px;
+}
+
+#intro {
+    font-size:x-large;
+    font-weight: bold;
+}
+
+div {
+    white-space: pre-wrap;
+    background-color: white;
+    border-radius: 25px;
+    padding: 20px;
+    text-align: left;
+}
+
+#restaurantButton {
+    margin-right: 50px;
+}
+
+#foodButtonCheck, #restButtonCheck {
+    display: none;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+p {
+    margin: 0;
+}

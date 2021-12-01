@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="Description" content="DSCI551 Website"/>
+        <meta name="Owners" content="Shenghan Liu"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>DSCI 551 Website</title>
+        <header id="explanation">
+            <h1 id="intro">
+                Welcome to Restaurant Recommender System!
+            </h1>
+            <p>
+                Page For Display the Input File Information 
+            </p>
+        </header>
+    </head>
+
+    <body>
+        <h1>Successfully Upload the Input Files</h1>
+        <h2> Select the City to Discover and Check the Information</h2>
+        <form action = '/information' method="POST" enctype="multipart/form-data">
+            <input required name="city" id = "city_id" type="text" value="" placeholder=" -- Please select city" list = "city" />
+                <datalist id="city">
+                    <option>Austin</option>
+                    <option>Portland</option>
+                    <option>Arizona</option>
+                    <option>Arkansas</option>
+                    <option>California</option>
+                </datalist>
+                <p><input type="submit" name = 'submit' value="Check the Information" id="submit" class = 'btn'></p>  
+        </form>
+
+
+
+    </body>
+    
+</html>
+
