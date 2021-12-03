@@ -11,7 +11,7 @@ html {
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-image: url('food2.jpg'); /* Image credit to Steyn Viljoen, taken from pexels.com*/
+    background-image: url(background.jpg);
     background-repeat: no-repeat;
     background-size: 100% 750px;
     background-attachment: fixed;
@@ -47,27 +47,6 @@ main > section {
     outline: none;
 }
 
-button, #foodButton, #restaurantButton {
-    color: white;
-    border: none;
-    background-color: #d32323;
-    border-color: #d32323;
-    display: inline-block;
-    margin: 0;
-    border-radius: 10px;
-    padding: 20px;
-    padding-top: 17px;
-    padding-bottom: 14px;
-    outline: none;
-}
-
-button:hover, #foodButton:hover, #restaurantButton:hover {
-    filter: brightness(110%);
-}
-
-button:active {
-    filter: brightness(90%);
-}
 
 #location {
     color: gray;
@@ -80,12 +59,6 @@ button:active {
     margin-bottom: 250px;
     margin-left: 0px;
     outline: none;
-}
-
-#veganButton {
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 50%;
 }
 
 select option {
@@ -114,14 +87,6 @@ div {
     border-radius: 25px;
     padding: 20px;
     text-align: left;
-}
-
-#restaurantButton {
-    margin-right: 50px;
-}
-
-#foodButtonCheck, #restButtonCheck {
-    display: none;
 }
 
 h1 {

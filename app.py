@@ -1,8 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for, session, abort, flash, jsonify
 import requests
 from werkzeug.utils import secure_filename
-import sys
-import test
+import util
 import os
 import pandas as pd
 
@@ -35,8 +34,8 @@ def upload():
                 session['b_name'] = filename
             else:
                 abort(400)
-        #test.clear_firebase_cache()
-        #test.json_to_csv(path['review_path'], path['business_path'])
+        util.clear_firebase_cache()
+        util.json_to_csv(path['review_path'], path['business_path'])
 
         return render_template('upload.html')
 
@@ -66,54 +65,41 @@ def information():
         review = requests.get(url = url + 'review.json').json()
 
         city_business = pd.DataFrame.from_dict(business, orient="index")
-        city_rest = city_business[(city_business.categories.str.contains('Restaurants'))| (city_business.categories.str.contains('Food'))]
+        city_rest = city_business[(city_business.categories.str.contains('Restaurants')
+        )| (city_business.categories.str.contains('Food'))].reset_index(drop = True)
         review_df = pd.json_normalize(review)
-        city_review = review_df[review_df['business_id'].isin(city_rest['business_id'].tolist())]
+        city_review = review_df[review_df['business_id'].isin(city_rest['business_id'].tolist())].reset_index(drop = True)
 
-        grouped_rest = test.preprocess_group_restaurant_review(city_review, city_rest)
+        grouped_rest = util.preprocess_group_restaurant_review(city_review, city_rest)
         requests.put(url = url + 'grouped_df.json', data = grouped_rest.to_json(orient = 'records'))
         return render_template('information.html', r = r_res, r_df = city_review, b = b_res, b_df = city_rest)
     else:
         return render_template('upload.html')
 
-@app.route("/result", methods = ['POST', 'GET'])
-def result():
+@app.route("/recommendation", methods = ['POST', 'GET'])
+def recommendation():
     if request.method == 'POST':
-        if request.form['submit'] == 'Go To Recommendation Page':
-            return render_template('result.html')
-        else:
-            text = request.form.get('querytext')
-            rank = request.form.get('num')
-            print('Text is' + text, file = sys.stderr)
-            print('Number is' + str(rank), file = sys.stderr)
+        return redirect(url_for('update'))
+    else:
+        return redirect(url_for('information'))
 
-            grouped_df = pd.json_normalize(requests.get(url = url + 'grouped_df.json').json())
-            tfidf_df = test.perform_tfidf(grouped_df)
-            feature_df = test.generate_n_dataframe(tfidf_df, rank)
-
-            output = test.output_recommendation(feature_df, text, rank)
-            return jsonify({'result':'success', 'data': output})
-    return
-
-@app.route("/update", methods = ['POST'])
+@app.route("/update", methods = ['POST', 'GET'])
 def update():
     if request.method == 'POST':
         text = request.form.get('querybox')
         rank = int(request.form.get('rank'))
-        print('Text is' + str(text), file = sys.stderr)
-        print('Number is' + str(rank), file = sys.stderr)
 
         grouped_df = pd.json_normalize(requests.get(url = url + 'grouped_df.json').json())
-        tfidf_df = test.perform_tfidf(grouped_df)
-        feature_df = test.generate_n_dataframe(tfidf_df, rank)
+        tfidf_df = util.perform_tfidf(grouped_df)
+        feature_df = util.generate_n_dataframe(tfidf_df, rank)
 
         with_business_id = grouped_df[['business_id','stars','name']].merge(feature_df)
         all_info = grouped_df[['business_id','categories','review_count','address']].merge(with_business_id).drop_duplicates()
 
-        output = test.output_recommendation(all_info, text, rank)
+        output = util.output_recommendation(all_info, text, rank)
         return jsonify({'result':'success', 'data': output})
     else:
-        return render_template('result.html')
+        return render_template('recommendation.html')
 
 if __name__ == "__main__":
     app.config['SESSION_TYPE'] = 'filesystem'
