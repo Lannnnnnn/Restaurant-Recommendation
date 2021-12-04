@@ -35,7 +35,7 @@
             <section id="query">
                 <form id = 'query' action = '/update' method = "POST" id="query">
                     <input type="text" class = 'form-control' id="querybox" name="querybox" placeholder="What are you looking for?">
-                    <input type="text" class = 'form-control' id="rank" name="rank" placeholder="how many results(max 10)">
+                    <input type="text" class = 'form-control' id="rank" name="rank" placeholder="how many results(max 5)">
                     <br>
                     <p><input class = 'btn btn-primary' type="submit" id = "submit" name = 'submit' value="Get Recommendation Results"></p> 
                 </form>
@@ -118,7 +118,7 @@
                         })
                     })
                 </script>
-                <script src="{{ url_for('static', filename='results.js') }}" ></script>
+                <script src="{{ url_for('static', filename='display.js') }}" ></script>
             </section>
         </main>
     </body>
