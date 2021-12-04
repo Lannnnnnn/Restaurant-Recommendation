@@ -11,7 +11,7 @@ Shenghan Liu
 
 #### Project Architecture
 
-![alt text](https://github.com/Lannnnnnn/DSCI-551-Project/)
+![alt text](https://github.com/Lannnnnnn/DSCI-551-Project/static/architecture.png)
 
 
 
