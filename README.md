@@ -1,4 +1,4 @@
-# DSCI-551-Project
+# Restaurant Recommendation
 
 #### Project topic:
 
